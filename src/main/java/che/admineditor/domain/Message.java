@@ -1,37 +1,22 @@
 package che.admineditor.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonView;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
-@Table
-@ToString(of = {"id", "text"})
-@EqualsAndHashCode(of = {"id"})
+@Table(name = "messages")
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonView(Views.Id.class)
     private Long id;
-    @JsonView(Views.IdName.class)
+    private Long pId;
     private String text;
 
-    @Column(updatable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonView(Views.FullMessage.class)
-    private LocalDateTime creationDate;
-
-    public LocalDateTime getCreationDate() {
-        return creationDate;
+    public Message() {
     }
 
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
+    public Message(Long pId, String text) {
+        this.pId = pId;
+        this.text = text;
     }
 
     public Long getId() {
@@ -42,11 +27,28 @@ public class Message {
         this.id = id;
     }
 
+    public Long getpId() {
+        return pId;
+    }
+
+    public void setpId(Long pId) {
+        this.pId = pId;
+    }
+
     public String getText() {
         return text;
     }
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "id=" + id +
+                ", pId=" + pId +
+                ", text='" + text + '\'' +
+                '}';
     }
 }
