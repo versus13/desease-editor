@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -26,6 +25,7 @@ public class MainController {
     public List<Message> getAll(){
         return messageRepo.findAll();
     }
+
     @GetMapping("{id}")
     public Message getOne(@PathVariable("id") Message message) {
         return message;
@@ -33,22 +33,20 @@ public class MainController {
 
     @PostMapping("/create")
     public Message create(@RequestBody Message message) {
+        logger.info("create " + message.toString());
         return messageRepo.save(message);
     }
 
-    @PutMapping("{id}")
-    public void update(
+    @PutMapping("/{id}")
+    public Message update(
             @PathVariable("id") Message messageFromDb,
             @RequestBody Message message) {
-        logger.info("messageFromDb:::::::::::: " + messageFromDb.toString());
-        logger.info("message:::::::::::: " + message.toString());
         BeanUtils.copyProperties(message, messageFromDb, "id");
-        messageRepo.save(messageFromDb);
+        return  messageRepo.save(messageFromDb);
     }
 
     @DeleteMapping("{id}")
-    public List<Message> delete(@PathVariable("id") Message message) {
+    public void delete(@PathVariable("id") Message message) {
         messageRepo.delete(message);
-        return this.getAll();
     }
 }

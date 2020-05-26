@@ -1,6 +1,9 @@
 package che.admineditor.domain;
 
+import org.springframework.lang.Nullable;
+
 import javax.persistence.*;
+import java.util.Arrays;
 
 @Entity
 @Table(name = "messages")
@@ -8,15 +11,18 @@ public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Nullable
     private Long pId;
-    private String text;
+
+    private String title;
+
+    private String titleInput;
+
+    private String description;
+
+    private String descriptionInput;
 
     public Message() {
-    }
-
-    public Message(Long pId, String text) {
-        this.pId = pId;
-        this.text = text;
     }
 
     public Long getId() {
@@ -27,20 +33,53 @@ public class Message {
         this.id = id;
     }
 
+    @Nullable
     public Long getpId() {
         return pId;
     }
 
-    public void setpId(Long pId) {
+    public void setpId(@Nullable Long pId) {
         this.pId = pId;
     }
 
-    public String getText() {
-        return text;
+    public String getTitle() {
+        return title;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getTitleInput() {
+        return titleInput;
+    }
+
+    public void setTitleInput(String titleInput) {
+        this.titleInput = titleInput;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDescriptionInput() {
+        return descriptionInput;
+    }
+
+    public void setDescriptionInput(String descriptionInput) {
+        this.descriptionInput = descriptionInput;
+    }
+
+    public Message(@Nullable Long pId, String title, String titleInput, String description, String descriptionInput) {
+        this.pId = pId;
+        this.title = title;
+        this.titleInput = titleInput;
+        this.description = description;
+        this.descriptionInput = descriptionInput;
     }
 
     @Override
@@ -48,7 +87,10 @@ public class Message {
         return "Message{" +
                 "id=" + id +
                 ", pId=" + pId +
-                ", text='" + text + '\'' +
+                ", title='" + title + '\'' +
+                ", titleInput='" + titleInput + '\'' +
+                ", description='" + description + '\'' +
+                ", descriptionInput='" + descriptionInput + '\'' +
                 '}';
     }
 }
