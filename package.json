@@ -1,0 +1,30 @@
+{
+  "name": "admin-editor",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/versus13/desease-editor.git",
+  "author": "Vlad.Chernichenko <vchernichenko13@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "serve": "webpack-dev-server"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "vue": "^2.6.11",
+    "vue-resource": "^1.5.1",
+    "vue-router": "^3.3.1",
+    "vuetify": "^2.2.30",
+    "vuex": "^3.4.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.10.1",
+    "@babel/preset-env": "^7.10.1",
+    "babel-loader": "^8.1.0",
+    "vue-loader": "^15.9.2",
+    "vue-template-compiler": "^2.6.11",
+    "vuetify-loader": "^1.4.4",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.11.0"
+  }
+}
