@@ -1,15 +1,13 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-    <v-app id="app">
-        <login></login>
-    </v-app>
+    <router-view></router-view>
 </template>
 
 <script>
     // import MessagesList from 'components/messages/MessageList.vue'
-    import Login from "./Login.vue";
+    import Admin from "../components/Admin.vue";
     export default {
         components: {
-            Login
+            Admin
             // MessagesList
         },
         data() {
