@@ -1,21 +1,18 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-    <router-view></router-view>
+    <v-app>
+
+        <v-content>
+            <v-container fluid>
+                <router-view></router-view>
+            </v-container>
+        </v-content>
+    </v-app>
+
 </template>
 
 <script>
-    // import MessagesList from 'components/messages/MessageList.vue'
-    import Admin from "../components/Admin.vue";
     export default {
-        components: {
-            Admin
-            // MessagesList
-        },
-        data() {
-            return {
-                // messages: frontendData.messages,
-                // profile: frontendData.profile
-            }
-        }
+
     }
 </script>
 

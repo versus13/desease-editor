@@ -3,7 +3,8 @@
 <!--        <header-bar></header-bar>-->
 
                 <v-btn small @click="addComponent">добавить симптом</v-btn>
-
+            <v-spacer></v-spacer>
+        <v-btn small @click="logout">Logout</v-btn>
         <Tree @reload="reload"
               @update="update"
               @addComponent="addComponent"
@@ -102,6 +103,9 @@
             },
             reload(){
                 this.$store.dispatch("getAll")
+            },
+            logout(){
+                this.$store.dispatch("logout")
             }
         }
     }

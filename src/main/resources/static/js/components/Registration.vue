@@ -20,7 +20,7 @@
                                     dark
                                     flat
                             >
-                                <v-toolbar-title>Login</v-toolbar-title>
+                                <v-toolbar-title>Registration</v-toolbar-title>
                                 <v-spacer></v-spacer>
                             </v-toolbar>
                             <v-card-text>
@@ -46,11 +46,7 @@
                             <v-card-actions>
 
                                 <v-spacer></v-spacer>
-                                <v-row>
-                                    <v-btn @click="onRegister">Зарегистрироваться</v-btn>
-                                    <v-btn @click="login">Login</v-btn>
-                                </v-row>
-
+                                <v-btn @click="onRegister">Login</v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-col>
@@ -62,7 +58,7 @@
 
 <script>
     export default {
-        name: "Login",
+        name: "Registration",
         data: () => ({
             user:{
                 login:"",
@@ -70,13 +66,10 @@
             }
         }),
         methods: {
-            login(e) {
-                this.$store.dispatch("login",this.user).then(data => {
+            onRegister(e) {
+                this.$store.dispatch("register",this.user).then(data => {
 
                 })
-            },
-            onRegister(e){
-
             }
         }
     }
