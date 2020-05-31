@@ -72,11 +72,11 @@
         methods: {
             login(e) {
                 this.$store.dispatch("login",this.user).then(data => {
-
+                    // if(data === "")
                 })
             },
             onRegister(e){
-
+                this.$router.push("/registration")
             }
         }
     }

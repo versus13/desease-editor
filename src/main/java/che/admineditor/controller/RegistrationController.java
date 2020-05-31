@@ -1,13 +1,15 @@
 package che.admineditor.controller;
 
+import che.admineditor.domain.Role;
 import che.admineditor.domain.User;
 import che.admineditor.repo.UserRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.Collections;
 
 @Controller
 public class RegistrationController {
@@ -19,18 +21,19 @@ public class RegistrationController {
         this.userRepo = userRepo;
     }
 
-    @GetMapping("/registration")
-    public String registration(){
-        return "register";
-    }
-
     @PostMapping("/registration")
-    public String addUser(User user){
-        logger.info("in register 1 ");
+    public String addUser(User user) {
+        logger.info("in register");
         User userFromDb = userRepo.findByUsername(user.getUsername());
-        if(userFromDb!=null){
-            logger.info("user exists!");
+
+        if (userFromDb != null) {
+            return "registration";
         }
+
+        user.setActive(true);
+        user.setRoles(Collections.singleton(Role.USER));
+        userRepo.save(user);
+
         return "redirect:/login";
     }
 }

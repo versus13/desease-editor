@@ -15,13 +15,19 @@ export default new Vuex.Store({
     },
     actions: {
         register: ({commit}, credentials) => {
-            return axios.post("http://localhost:9000/registration", credentials)
+            return axios.post("http://localhost:9000/registration", credentials).then(response => {
+                return response.data;
+            })
         },
         login: ({commit}, credentials) => {
-            return axios.post("http://localhost:9000/login", credentials)
+            return axios.post("http://localhost:9000/login", credentials).then(response => {
+                return response.data;
+            })
         },
         logout: ({commit}, credentials) => {
-            return axios.post("http://localhost:9000/logout")
+            return axios.post("http://localhost:9000/logout",credentials).then(response => {
+                return response.data;
+            })
         },
         getAll: ({commit}, message) => {
             return axios.get("http://localhost:9000/admin/getAll")

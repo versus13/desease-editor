@@ -61,14 +61,16 @@
         name: "Registration",
         data: () => ({
             user:{
-                login:"",
+                username:"",
                 password:""
             }
         }),
         methods: {
             onRegister(e) {
                 this.$store.dispatch("register",this.user).then(data => {
-
+                    if(data === "user exists!"){
+                        this.$router.push("/login");
+                    }
                 })
             }
         }
