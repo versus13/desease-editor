@@ -59,7 +59,7 @@
 
 <script>
     export default {
-        name: "Admin",
+        name: "Login",
         data: () => ({
             user:{
                 login:"",

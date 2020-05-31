@@ -1,11 +1,10 @@
 import Vue from 'vue'
-import VueResource from 'vue-resource'
 import App from 'pages/App.vue'
-import router from './plugins/router'
-Vue.use(VueResource)
+import vuetify from 'plugins/vuetify'
+import 'vuetify/dist/vuetify.min.css'
 
 new Vue({
     el: '#app',
-    router,
+    vuetify,
     render: a => a(App)
 })
