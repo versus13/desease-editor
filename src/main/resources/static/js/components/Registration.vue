@@ -3,23 +3,19 @@
         <v-content>
             <v-container
                     class="fill-height"
-                    fluid
-            >
+                    fluid>
                 <v-row
                         align="center"
-                        justify="center"
-                >
+                        justify="center">
                     <v-col
                             cols="12"
                             sm="8"
-                            md="4"
-                    >
+                            md="4">
                         <v-card class="elevation-12">
                             <v-toolbar
                                     color="primary"
                                     dark
-                                    flat
-                            >
+                                    flat>
                                 <v-toolbar-title>Registration</v-toolbar-title>
                                 <v-spacer></v-spacer>
                             </v-toolbar>
@@ -28,7 +24,7 @@
                                     <v-text-field
                                             label="Login"
                                             name="login"
-                                            v-model="user.login"
+                                            v-model="user.username"
                                             prepend-icon="mdi-account-tie"
                                             type="text"
                                     ></v-text-field>
@@ -38,6 +34,15 @@
                                             label="Password"
                                             name="password"
                                             v-model="user.password"
+                                            prepend-icon="mdi-lock"
+                                            type="password"
+                                    ></v-text-field>
+
+                                    <v-text-field
+                                            id="confirmpassword"
+                                            label="Confirm password"
+                                            name="confirmpassword"
+                                            v-model="user.passwordConfirm"
                                             prepend-icon="mdi-lock"
                                             type="password"
                                     ></v-text-field>
@@ -62,15 +67,22 @@
         data: () => ({
             user:{
                 username:"",
-                password:""
-            }
+                password:"",
+                passwordConfirm:""
+            },
+            confirmpassword:""
         }),
         methods: {
             onRegister(e) {
                 this.$store.dispatch("register",this.user).then(data => {
-                    if(data === "user exists!"){
+                    if(data === "Вы зарегистрированы!"){
+                        this.$router.push("/admin")
+                    } else {
                         this.$router.push("/login");
                     }
+                    // if(data === "user exists!"){
+                    //     this.$router.push("/login");
+                    // }
                 })
             }
         }

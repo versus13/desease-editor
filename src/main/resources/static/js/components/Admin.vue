@@ -1,9 +1,7 @@
 <template>
     <div>
-<!--        <header-bar></header-bar>-->
-
-                <v-btn small @click="addComponent">добавить симптом</v-btn>
-            <v-spacer></v-spacer>
+        <v-btn small @click="addComponent">добавить симптом</v-btn>
+        <v-spacer></v-spacer>
         <v-btn small @click="logout">Logout</v-btn>
         <Tree @reload="reload"
               @update="update"
@@ -17,16 +15,12 @@
 </template>
 
 <script>
-    import HeaderBar from './panel/HeaderBar.vue'
-    // import SelectBtnPanel from "./panel/SelectBtnPanel.vue";
     import Tree from "./sub-components/Tree.vue";
 
     export default {
         name: 'Admin',
         components: {
-            Tree,
-            HeaderBar,
-            // SelectBtnPanel,
+            Tree
         },
 
         data: () => ({
@@ -50,7 +44,7 @@
                     mappedElem;
 
                 // First map the nodes of the array to an object -> create a hash table.
-                for(var i = 0, len = arr.length; i < len; i++) {
+                for (var i = 0, len = arr.length; i < len; i++) {
                     arrElem = arr[i];
                     mappedArr[arrElem.id] = arrElem;
                     mappedArr[arrElem.id]['children'] = [];
@@ -91,20 +85,20 @@
             },
             update(item) {
                 this.$store.dispatch("update", item).then(data => {
-                    this.treeData.splice(this.treeData.indexOf(item),1, data);
+                    this.treeData.splice(this.treeData.indexOf(item), 1, data);
                 })
             },
             removeOne(index) {
                 console.log(index)
 
                 this.$store.dispatch("remove", index.id).then(data => {
-                    this.treeData.splice(this.treeData.indexOf(index),1)
+                    this.treeData.splice(this.treeData.indexOf(index), 1)
                 })
             },
-            reload(){
+            reload() {
                 this.$store.dispatch("getAll")
             },
-            logout(){
+            logout() {
                 this.$store.dispatch("logout")
             }
         }

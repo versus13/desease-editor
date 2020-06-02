@@ -28,7 +28,7 @@
                                     <v-text-field
                                             label="Login"
                                             name="login"
-                                            v-model="user.login"
+                                            v-model="user.username"
                                             prepend-icon="mdi-account-tie"
                                             type="text"
                                     ></v-text-field>
@@ -65,14 +65,14 @@
         name: "Login",
         data: () => ({
             user:{
-                login:"",
+                username:"",
                 password:""
             }
         }),
         methods: {
             login(e) {
-                this.$store.dispatch("login",this.user).then(data => {
-                    // if(data === "")
+                this.$store.dispatch("login", this.user).then(data => {
+
                 })
             },
             onRegister(e){
