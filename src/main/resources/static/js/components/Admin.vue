@@ -93,19 +93,19 @@
                 console.log(this.treeData)
             },
             update(item) {
-                this.$store.dispatch("update", item).then(data => {
+                this.$store.dispatch("admin/update", item).then(data => {
                     this.treeData.splice(this.treeData.indexOf(item), 1, data);
                 })
             },
             removeOne(index) {
                 console.log(index)
 
-                this.$store.dispatch("remove", index.id).then(data => {
+                this.$store.dispatch("admin/remove", index.id).then(data => {
                     this.treeData.splice(this.treeData.indexOf(index), 1)
                 })
             },
             reload() {
-                this.$store.dispatch("getAll")
+                this.$store.dispatch("admin/getAll")
             },
             logOut() {
                 this.$store.dispatch('auth/logout');

@@ -83,7 +83,7 @@
             removeSubOne(item) {
                 console.log(item)
                 this.parentItem.children.splice(this.parentItem.children.indexOf(item), 1)
-                this.$store.dispatch("remove",item.id)
+                this.$store.dispatch("admin/remove",item.id)
             },
             remove(item){
                 if(!this.parentItem) this.removeOne(item)
@@ -103,7 +103,7 @@
                     descriptionInput:'',
                     children:[]
                 }
-                this.$store.dispatch("add", o).then(data => {
+                this.$store.dispatch("admin/add", o).then(data => {
                     console.log(data)
                     this.item.children = []
                     data.children = []
@@ -114,7 +114,7 @@
             },
             updateSubOne(item) {
                 console.log(item)
-                this.$store.dispatch("update", item).then(data => {
+                this.$store.dispatch("admin/update", item).then(data => {
                     // this.treeData.splice(this.treeData.indexOf(item),1, data);
                 })
 
