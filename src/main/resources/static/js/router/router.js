@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../components/Login.vue'
 import Register from "../components/Register.vue";
+import Admin from "../components/Admin.vue";
 Vue.use(VueRouter)
 
 const routes = [
@@ -16,8 +17,7 @@ const routes = [
     {
         path: '/admin',
         name: 'admin',
-        // lazy-loaded
-        component: () => import('../components/Admin.vue')
+        component: Admin
     },
 
 ]

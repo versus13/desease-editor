@@ -1,53 +1,59 @@
 <template>
-    <div class="col-md-12">
-        <div class="card card-container">
-            <img
-                    id="profile-img"
-                    src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-                    class="profile-img-card"
-            />
-            <form name="form" @submit.prevent="handleLogin">
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input
-                            v-model="user.username"
-                            v-validate="'required'"
-                            type="text"
-                            class="form-control"
-                            name="username"
-                    />
-                    <div
-                            v-if="errors.has('username')"
-                            class="alert alert-danger"
-                            role="alert"
-                    >Username is required!</div>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input
-                            v-model="user.password"
-                            v-validate="'required'"
-                            type="password"
-                            class="form-control"
-                            name="password"
-                    />
-                    <div
-                            v-if="errors.has('password')"
-                            class="alert alert-danger"
-                            role="alert"
-                    >Password is required!</div>
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-primary btn-block" :disabled="loading">
-                        <span v-show="loading" class="spinner-border spinner-border-sm"></span>
-                        <span>Login</span>
-                    </button>
-                </div>
-                <div class="form-group">
-                    <div v-if="message" class="alert alert-danger" role="alert">{{message}}</div>
-                </div>
-            </form>
-        </div>
+    <div>
+        <v-content>
+            <v-container
+                    class="fill-height"
+                    fluid
+            >
+                <v-row
+                        align="center"
+                        justify="center"
+                >
+                    <v-col
+                            cols="12"
+                            sm="8"
+                            md="4"
+                    >
+                        <v-card class="elevation-12">
+                            <v-toolbar
+                                    color="primary"
+                                    dark
+                                    flat
+                            >
+                                <v-toolbar-title></v-toolbar-title>
+                                <v-spacer></v-spacer>
+                            </v-toolbar>
+                            <v-card-text>
+                                <v-form>
+                                    <v-text-field
+                                            label="Login"
+                                            name="login"
+                                            v-model="user.username"
+                                            prepend-icon="mdi-account-tie"
+                                            type="text"
+                                    ></v-text-field>
+
+                                    <v-text-field
+                                            id="password"
+                                            label="Password"
+                                            name="password"
+                                            v-model="user.password"
+                                            prepend-icon="mdi-lock"
+                                            type="password"
+                                    ></v-text-field>
+                                </v-form>
+                            </v-card-text>
+                            <v-card-actions>
+
+                                <v-spacer></v-spacer>
+                                <v-btn text @click="handleLogin">Register</v-btn>
+                                <v-btn color="primary" @click="handleLogin">Login</v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-col>
+                </v-row>
+            </v-container>
+        </v-content>
     </div>
 </template>
 
@@ -75,20 +81,13 @@
         },
         methods: {
             handleLogin() {
-                this.loading = true;
-                this.$validator.validateAll().then(isValid => {
-                    if (!isValid) {
-                        this.loading = false;
-                        return;
-                    }
-
+            console.log("handleLogin " + this.user.username + " " + this.user.password)
                     if (this.user.username && this.user.password) {
                         this.$store.dispatch('auth/login', this.user).then(
                             () => {
                                 this.$router.push('/admin');
                             },
                             error => {
-                                this.loading = false;
                                 this.message =
                                     (error.response && error.response.data) ||
                                     error.message ||
@@ -96,7 +95,7 @@
                             }
                         );
                     }
-                });
+
             }
         }
     };

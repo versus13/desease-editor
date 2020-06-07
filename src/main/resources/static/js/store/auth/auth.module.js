@@ -1,29 +1,61 @@
-import axios from "axios";
+import AuthService from './auth.service';
 
-export default {
-    state: {},
-    getters: {},
-    mutations: {},
+const user = JSON.parse(localStorage.getItem('user'));
+const initialState = user
+    ? { status: { loggedIn: true }, user }
+    : { status: { loggedIn: false }, user: null };
+
+export const auth = {
+    namespaced: true,
+    state: initialState,
     actions: {
-        register: ({commit}, credentials) => {
-            return axios.post("http://localhost:9000/registration", credentials).then(response => {
-                return response.data;
-            })
+        login({ commit }, user) {
+            return AuthService.login(user).then(
+                user => {
+                    commit('loginSuccess', user);
+                    return Promise.resolve(user);
+                },
+                error => {
+                    commit('loginFailure');
+                    return Promise.reject(error);
+                }
+            );
         },
-        login: ({ commit }, payload) => {
-            return new Promise((resolve, reject) => {
-                axios.post("/signin", payload)
-                    .then(response => {
-                        if (response.data.accessToken) {
-                            localStorage.setItem('user', JSON.stringify(response.data));
-                        }
-
-                        return response.data;
-                    });
-            })
+        logout({ commit }) {
+            AuthService.logout();
+            commit('logout');
         },
-        logout:() => {
-            localStorage.removeItem('user');
+        register({ commit }, user) {
+            return AuthService.register(user).then(
+                response => {
+                    commit('registerSuccess');
+                    return Promise.resolve(response.data);
+                },
+                error => {
+                    commit('registerFailure');
+                    return Promise.reject(error);
+                }
+            );
+        }
+    },
+    mutations: {
+        loginSuccess(state, user) {
+            state.status.loggedIn = true;
+            state.user = user;
+        },
+        loginFailure(state) {
+            state.status.loggedIn = false;
+            state.user = null;
+        },
+        logout(state) {
+            state.status.loggedIn = false;
+            state.user = null;
+        },
+        registerSuccess(state) {
+            state.status.loggedIn = false;
+        },
+        registerFailure(state) {
+            state.status.loggedIn = false;
         }
     }
-}
+};
