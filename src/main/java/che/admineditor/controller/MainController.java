@@ -1,51 +1,33 @@
 package che.admineditor.controller;
 
-import che.admineditor.domain.Message;
 import che.admineditor.repo.MessageRepo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import java.util.List;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-@RestController
-@RequestMapping("/admin")
+import java.util.HashMap;
+
+@Controller
+@RequestMapping("/")
 public class MainController {
-
     private final MessageRepo messageRepo;
-    private Logger logger = LoggerFactory.getLogger(MainController.class);
+
     @Autowired
     public MainController(MessageRepo messageRepo) {
         this.messageRepo = messageRepo;
     }
 
-    @GetMapping("/getAll")
-    public List<Message> getAll(){
-        return messageRepo.findAll();
-    }
+    @GetMapping
+    public String main(Model model) {
+        HashMap<Object, Object> data = new HashMap<>();
 
-    @GetMapping("{id}")
-    public Message getOne(@PathVariable("id") Message message) {
-        return message;
-    }
+        data.put("profile", "");
+        data.put("messages", messageRepo.findAll());
 
-    @PostMapping("/create")
-    public Message create(@RequestBody Message message) {
-        logger.info("create " + message.toString());
-        return messageRepo.save(message);
-    }
+        model.addAttribute("frontendData", data);
 
-    @PutMapping("/{id}")
-    public Message update(
-            @PathVariable("id") Message messageFromDb,
-            @RequestBody Message message) {
-        BeanUtils.copyProperties(message, messageFromDb, "id");
-        return  messageRepo.save(messageFromDb);
-    }
-
-    @DeleteMapping("{id}")
-    public void delete(@PathVariable("id") Message message) {
-        messageRepo.delete(message);
+        return "index";
     }
 }
