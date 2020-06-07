@@ -1,6 +1,7 @@
 <template>
     <div>
         <v-content>
+            <v-alert v-if="message" :type="successful ? 'success' : 'error'">{{message.message}}</v-alert>
             <v-container
                     class="fill-height"
                     fluid
@@ -46,7 +47,7 @@
                             <v-card-actions>
 
                                 <v-spacer></v-spacer>
-                                <v-btn text @click="handleLogin">Register</v-btn>
+                                <v-btn text @click="handleRegister">Register</v-btn>
                                 <v-btn color="primary" @click="handleLogin">Login</v-btn>
                             </v-card-actions>
                         </v-card>
@@ -96,6 +97,9 @@
                         );
                     }
 
+            },
+            handleRegister() {
+                this.$router.push("/register")
             }
         }
     };

@@ -1,8 +1,7 @@
 <template>
     <div>
         <v-btn small @click="addComponent">добавить симптом</v-btn>
-        <v-spacer></v-spacer>
-        <v-btn small @click="logout">Logout</v-btn>
+        <v-btn small @click="logOut">Logout</v-btn>
         <Tree @reload="reload"
               @update="update"
               @addComponent="addComponent"
@@ -30,7 +29,7 @@
             ids: []
         }),
         created() {
-            this.$store.dispatch("getAll").then(data => {
+            this.$store.dispatch("admin/getAll").then(data => {
                 console.log(data)
                 this.treeData = this.buildTree(data)
                 console.log(this.treeData)
@@ -108,8 +107,9 @@
             reload() {
                 this.$store.dispatch("getAll")
             },
-            logout() {
-                this.$store.dispatch("logout")
+            logOut() {
+                this.$store.dispatch('auth/logout');
+                this.$router.push('/');
             }
 
         }

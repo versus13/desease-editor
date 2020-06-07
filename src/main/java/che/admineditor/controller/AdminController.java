@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/api/admin")
 public class AdminController {
 
     private final MessageRepo messageRepo;
@@ -25,18 +25,18 @@ public class AdminController {
         return messageRepo.findAll();
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/get/{id}")
     public Message getOne(@PathVariable("id") Message message) {
         return message;
     }
 
-    @PostMapping("/create")
-    public Message create(@RequestBody Message message) {
+    @PostMapping("/add")
+    public Message add(@RequestBody Message message) {
         logger.info("create " + message.toString());
         return messageRepo.save(message);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public Message update(
             @PathVariable("id") Message messageFromDb,
             @RequestBody Message message) {
@@ -44,7 +44,7 @@ public class AdminController {
         return  messageRepo.save(messageFromDb);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable("id") Message message) {
         messageRepo.delete(message);
     }

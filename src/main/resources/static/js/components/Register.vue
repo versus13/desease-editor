@@ -1,67 +1,63 @@
 <template>
-    <div class="col-md-12">
-        <div class="card card-container">
-            <img
-                    id="profile-img"
-                    src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-                    class="profile-img-card"
-            />
-            <form name="form" @submit.prevent="handleRegister">
-                <div v-if="!successful">
-                    <div class="form-group">
-                        <label for="username">Username</label>
-                        <input
-                                v-model="user.username"
-                                v-validate="'required|min:3|max:20'"
-                                type="text"
-                                class="form-control"
-                                name="username"
-                        />
-                        <div
-                                v-if="submitted && errors.has('username')"
-                                class="alert-danger"
-                        >{{errors.first('username')}}</div>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input
-                                v-model="user.email"
-                                v-validate="'required|email|max:50'"
-                                type="email"
-                                class="form-control"
-                                name="email"
-                        />
-                        <div
-                                v-if="submitted && errors.has('email')"
-                                class="alert-danger"
-                        >{{errors.first('email')}}</div>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input
-                                v-model="user.password"
-                                v-validate="'required|min:6|max:40'"
-                                type="password"
-                                class="form-control"
-                                name="password"
-                        />
-                        <div
-                                v-if="submitted && errors.has('password')"
-                                class="alert-danger"
-                        >{{errors.first('password')}}</div>
-                    </div>
-                    <div class="form-group">
-                        <button class="btn btn-primary btn-block">Sign Up</button>
-                    </div>
-                </div>
-            </form>
+    <div>
+        <v-content>
+            <v-alert v-if="message" :type="successful ? 'success' : 'error'">{{message.message}}</v-alert>
+            <v-container
+                    class="fill-height"
+                    fluid>
+                <v-row
+                        align="center"
+                        justify="center">
+                    <v-col
+                            cols="12"
+                            sm="8"
+                            md="4">
+                        <v-card class="elevation-12">
+                            <v-toolbar
+                                    color="primary"
+                                    dark
+                                    flat>
+                                <v-toolbar-title>Зарегистрироваться</v-toolbar-title>
+                                <v-spacer></v-spacer>
+                            </v-toolbar>
+                            <v-card-text>
+                                <v-form>
+                                    <v-text-field
+                                            label="Login"
+                                            name="login"
+                                            v-model="user.username"
+                                            prepend-icon="mdi-account-tie"
+                                            type="text"
+                                    ></v-text-field>
 
-            <div
-                    v-if="message"
-                    class="alert"
-                    :class="successful ? 'alert-success' : 'alert-danger'"
-            >{{message}}</div>
-        </div>
+                                    <v-text-field
+                                            id="password"
+                                            label="Password"
+                                            name="password"
+                                            v-model="user.password"
+                                            prepend-icon="mdi-lock"
+                                            type="password"
+                                    ></v-text-field>
+
+                                    <v-text-field
+                                            id="email"
+                                            label="E-mail"
+                                            name="email"
+                                            v-model="user.email"
+                                            prepend-icon="mdi-lock"
+                                    ></v-text-field>
+                                </v-form>
+                            </v-card-text>
+                            <v-card-actions>
+
+                                <v-spacer></v-spacer>
+                                <v-btn @click="handleRegister">Зарегистрироваться</v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-col>
+                </v-row>
+            </v-container>
+        </v-content>
     </div>
 </template>
 
@@ -85,30 +81,27 @@
         },
         mounted() {
             if (this.loggedIn) {
-                this.$router.push('/profile');
+                this.$router.push('/admin');
             }
         },
         methods: {
             handleRegister() {
-                this.message = '';
-                this.submitted = true;
-                this.$validator.validate().then(isValid => {
-                    if (isValid) {
-                        this.$store.dispatch('auth/register', this.user).then(
-                            data => {
-                                this.message = data.message;
-                                this.successful = true;
-                            },
-                            error => {
-                                this.message =
-                                    (error.response && error.response.data) ||
-                                    error.message ||
-                                    error.toString();
-                                this.successful = false;
-                            }
-                        );
-                    }
-                });
+                if (this.user.username && this.user.password && this.user.email) {
+                    this.$store.dispatch('auth/register', this.user).then(
+                        data => {
+                            this.message = data.message;
+                            this.successful = true;
+                            this.$router.push("/")
+                        },
+                        error => {
+                            this.message =
+                                (error.response && error.response.data) ||
+                                error.message ||
+                                error.toString();
+                            this.successful = false;
+                        }
+                    );
+                }
             }
         }
     };
