@@ -36,6 +36,16 @@
                 console.log(this.treeData)
             })
         },
+        computed: {
+            currentUser() {
+                return this.$store.state.auth.user;
+            }
+        },
+        mounted() {
+            if (!this.currentUser) {
+                this.$router.push('/login');
+            }
+        },
         methods: {
             buildTree(arr) {
                 var tree = [],
@@ -101,6 +111,7 @@
             logout() {
                 this.$store.dispatch("logout")
             }
+
         }
     }
 </script>
